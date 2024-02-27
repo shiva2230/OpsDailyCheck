@@ -1,15 +1,22 @@
 package com.example.OpsDailyCheck.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 
 /**
  * An OpsDailyCheck.
  */
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "ops_daily_check")
 @SuppressWarnings("common-java:DuplicatedBlocks")
@@ -55,10 +62,10 @@ public class OpsDailyCheck implements Serializable {
     private String updatedBy;
 
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "created_at")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -205,29 +212,29 @@ public class OpsDailyCheck implements Serializable {
         this.updatedBy = updatedBy;
     }
 
-    public Instant getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return this.updatedAt;
     }
 
-    public OpsDailyCheck updatedAt(Instant updatedAt) {
+    public OpsDailyCheck updatedAt(LocalDateTime updatedAt) {
         this.setUpdatedAt(updatedAt);
         return this;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Instant getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return this.createdAt;
     }
 
-    public OpsDailyCheck createdAt(Instant createdAt) {
+    public OpsDailyCheck createdAt(LocalDateTime createdAt) {
         this.setCreatedAt(createdAt);
         return this;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
