@@ -33,7 +33,7 @@ public class OpsDailyCheckController {
     @GetMapping("/getByDate")
     public ResponseEntity<OpsDailyCheckDto> getOpsDailyCheckByDateOfEntry(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAt) {
         OpsDailyCheckDto opsDailyCheck = opsDailyCheckService.getOpsDailyCheckByDateOfEntry(updatedAt);
-        if (opsDailyCheck != null) {
+        if (opsDailyCheck != null && opsDailyCheck.getId() != null) {
             return ResponseEntity.ok(opsDailyCheck);
         } else {
             return ResponseEntity.notFound().build();
@@ -41,37 +41,26 @@ public class OpsDailyCheckController {
     }
 
 
+
     @PostMapping("/create")
     public ResponseEntity<OpsDailyCheckDto> createOpsDailyCheck(@RequestBody OpsDailyCheckDto opsDailyCheckDto) {
-        // Get the current date and time
-        LocalDateTime currentDate = LocalDateTime.now();
-        System.out.println(currentDate);
+        LocalDate localDate = LocalDate.now();
 
-        // Get the string representation of the current date and time
-        String currentDateTimeString = currentDate.toString();
-        System.out.println(currentDateTimeString);
+        LocalDateTime currentDate = localDate.atStartOfDay();
 
-        // Slice the string up to 'T'
-        String currentDatePart = currentDateTimeString.substring(0, currentDateTimeString.indexOf('T'));
-        System.out.println(currentDatePart);
-
-        // Compare the sliced date with the current date
-        if (currentDatePart.equals(opsDailyCheckDto.getCreatedAt())) {
-            // If the dates match, it means a checklist already exists for today
+        if (opsDailyCheckService.existsOpsDailyCheckForDate(currentDate)) {
+            System.out.println("else condition");
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-
-        // Set the createdAt timestamp to the current date and time
         LocalDateTime now = LocalDateTime.now();
         opsDailyCheckDto.setCreatedAt(now);
+        opsDailyCheckDto.setUpdatedAt(now);
 
-        // Assuming status is set based on some logic
-        // opsDailyCheckDto.setStatus(true);
-
-        // Create the checklist
         OpsDailyCheckDto createdOpsDailyCheck = opsDailyCheckService.createOpsDailyCheck(opsDailyCheckDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOpsDailyCheck);
     }
+
+
 
 
 

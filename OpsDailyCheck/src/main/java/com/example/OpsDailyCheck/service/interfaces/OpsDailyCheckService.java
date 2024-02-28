@@ -13,5 +13,5 @@ public interface OpsDailyCheckService {
     OpsDailyCheckDto getOpsDailyCheckByDateOfEntry(LocalDateTime updatedAt);
     OpsDailyCheckDto createOpsDailyCheck(OpsDailyCheckDto opsDailyCheckDto);
 
-    boolean existsOpsDailyCheckForDate(LocalDate date);
+    boolean existsOpsDailyCheckForDate(LocalDateTime date);
 }

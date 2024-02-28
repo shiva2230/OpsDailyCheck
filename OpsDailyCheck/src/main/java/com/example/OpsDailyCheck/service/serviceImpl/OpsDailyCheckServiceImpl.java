@@ -50,7 +50,12 @@ public class OpsDailyCheckServiceImpl implements OpsDailyCheckService {
     }
 
     @Override
-    public boolean existsOpsDailyCheckForDate(LocalDate date) {
-        return opsDailyCheckRepository.existsByUpdatedAt(date);
+    public boolean existsOpsDailyCheckForDate(LocalDateTime date) {
+        // Check if an OpsDailyCheck entry exists for the given date
+        LocalDate localDate = date.toLocalDate();
+        LocalDateTime startOfDay = localDate.atStartOfDay();
+        LocalDateTime endOfDay = localDate.atTime(23, 59, 59); // End of the day
+        return opsDailyCheckRepository.existsByCreatedAtBetween(startOfDay, endOfDay);
     }
+
 }
